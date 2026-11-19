@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bilimdon</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ff7a59">
+<link rel="icon" href="icon-192.png">
+<style>
+:root{--bg:#fff4d6;--card:#ffffff;--ink:#27304a;--soft:#e9eefc;--c1:#ff6b6b;--c2:#2f80ed;--c3:#27ae60;--c4:#f2994a;--c5:#9b51e0;--lock:#d9dde8;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#1b2038;--card:#262d4d;--ink:#f4f6ff;--soft:#323a63;--lock:#3b4370}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#1b2038;--card:#262d4d;--ink:#f4f6ff;--soft:#323a63;--lock:#3b4370}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Baloo 2","Trebuchet MS","Segoe UI",system-ui,sans-serif;-webkit-tap-highlight-color:transparent;user-select:none}
+.scr{display:none;height:100%;flex-direction:column;padding:12px}
+.scr.on{display:flex}
+h1{font-size:2.4rem;margin:8px 0 0;text-align:center}
+.sub{text-align:center;margin:0 0 14px;opacity:.8}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.menu{border:0;border-radius:26px;padding:18px 8px;font:inherit;font-size:1.25rem;font-weight:700;color:#fff;display:flex;flex-direction:column;align-items:center;gap:4px}
+.menu span{font-size:3rem}
+.menu.lock{background:var(--lock)!important;color:var(--ink);opacity:.8}
+.menu small{font-size:.8rem;font-weight:400}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.back{border:0;background:var(--card);color:var(--ink);font:inherit;font-size:1.4rem;border-radius:50%;width:48px;height:48px}
+.top b{font-size:1.4rem}
+.tabs{display:flex;gap:8px;margin-bottom:10px}
+.tab{flex:1;border:3px solid transparent;background:var(--card);color:var(--ink);font:inherit;font-weight:700;border-radius:16px;padding:10px 0}
+.tab.on{border-color:var(--c2);background:var(--soft)}
+.letters{display:grid;grid-template-columns:repeat(auto-fill,minmax(66px,1fr));gap:10px;overflow-y:auto;padding:2px 2px 16px}
+.l{border:0;border-radius:18px;aspect-ratio:1;font:inherit;font-size:1.8rem;font-weight:800;color:#fff}
+.pop{position:fixed;inset:0;background:rgba(10,14,35,.6);display:none;align-items:center;justify-content:center;padding:20px}
+.pop.on{display:flex}
+.pc{background:var(--card);border-radius:32px;padding:24px 30px;text-align:center;min-width:240px}
+.pc .e{font-size:7rem;line-height:1.1}
+.pc .t{font-size:3.2rem;font-weight:800}
+.pc .w{font-size:1.6rem}
+.pc button{margin-top:14px;border:0;border-radius:16px;background:var(--c3);color:#fff;font:inherit;font-size:1.2rem;padding:10px 22px}
+#cw{flex:1;min-height:0;border-radius:18px;overflow:hidden;background:#fff;touch-action:none}
+canvas{display:block;width:100%;height:100%;touch-action:none}
+.bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;margin-top:10px}
+.sw{width:38px;height:38px;border-radius:50%;border:4px solid var(--card)}
+.sw.on,.sz.on,.tl.on{outline:4px solid var(--c2)}
+.sz{width:44px;height:44px;border-radius:50%;border:0;background:var(--card);display:flex;align-items:center;justify-content:center}
+.sz i{background:var(--ink);border-radius:50%;display:block}
+.tl{border:0;border-radius:14px;background:var(--card);color:var(--ink);font:inherit;font-size:1.1rem;padding:8px 12px}
+.item{border:0;border-radius:20px;background:var(--card);color:var(--ink);font:inherit;font-size:1.25rem;font-weight:700;display:flex;align-items:center;gap:14px;padding:14px 16px;text-align:left}
+.item span{font-size:2.4rem}
+.rbox{flex:1;min-height:0;overflow-y:auto;background:var(--card);border-radius:24px;padding:18px 20px;font-size:1.45rem;line-height:1.65;white-space:pre-line}
+.re{font-size:4.5rem;text-align:center;line-height:1.2}
+#home{overflow-y:auto}
+.lv{font-size:.95rem}
+.qq{font-size:2.6rem;font-weight:800;text-align:center;margin:6px 0}
+.qv{font-size:2.2rem;text-align:center;line-height:1.3;flex:1;min-height:0;overflow-y:auto}
+.qf{text-align:center;font-size:1.4rem;font-weight:700;min-height:2em;margin:6px 0}
+.ans{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ans button{border:0;border-radius:22px;font:inherit;font-size:2.4rem;font-weight:800;color:#fff;padding:20px 0}
+.ans button.x{opacity:.25}
+.mg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;flex:1;align-content:start}
+.mc{border:0;border-radius:16px;aspect-ratio:1;font-size:2.3rem;background:var(--c2);color:#fff;padding:0}
+.mc.o{background:var(--card)}
+.mc.m{background:var(--c3)}
+.mus{position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);right:10px;z-index:5;width:46px;height:46px;border:0;border-radius:50%;background:var(--card);font-size:1.4rem;padding:0}
+.top{padding-right:56px}
+.qv{white-space:pre-line}
+</style>
+</head>
+<body>
+
+<div class="scr on" id="home">
+  <h1>Bilimdon</h1>
+  <p class="sub">Oʻynab oʻrgan!</p>
+  <div class='tabs'><button class='tab lv on' data-l='1' onclick='setLvl(1)'>🐣 Kichik (4–7)</button><button class='tab lv' data-l='2' onclick='setLvl(2)'>🧒 Katta (8–12)</button></div>
+  <div class="grid">
+    <button class="menu" style="background:var(--c1)" onclick="go('abc')"><span>🔤</span>Alifbo</button>
+    <button class="menu" style="background:var(--c5)" onclick="go('draw')"><span>🎨</span>Chizish</button>
+    <button class='menu' style='background:var(--c2)' onclick="go('num')"><span>🔢</span>Raqamlar</button>
+    <button class='menu' style='background:var(--c5)' onclick="go('brn')"><span>🧩</span>Aqlni charxla</button>
+    <button class="menu" style="background:var(--c3)" onclick="openLib('s')"><span>📖</span>Hikoyalar</button>
+    <button class="menu" style="background:var(--c4)" onclick="openLib('p')"><span>🎵</span>Sheʼrlar</button>
+  </div>
+</div>
+
+<div class="scr" id="abc">
+  <div class="top"><button class="back" onclick="go('home')">←</button><b>Alifbo</b></div>
+  <div class="tabs" id="tabs"></div>
+  <div class="letters" id="letters"></div>
+</div>
+
+<div class="scr" id="draw">
+  <div class="top"><button class="back" onclick="go('home')">←</button><b>Chizish</b></div>
+  <div id="cw"><canvas id="cv"></canvas></div>
+  <div class="bar" id="bar"></div>
+</div>
+
+<button id='mb' class='mus' onclick='music()'>🔇</button>
+
+<div class='scr' id='num'>
+  <div class='top'><button class='back' onclick="go('home')">←</button><b>Raqamlar</b></div>
+  <div class='grid'>
+    <button class='menu' style='background:var(--c2)' onclick="quiz('cnt')"><span>🍎</span>Sanash</button>
+    <button class='menu' style='background:var(--c3)' onclick="quiz('add')"><span>➕</span>Qoʻshish</button>
+    <button class='menu' style='background:var(--c1)' onclick="quiz('sub')"><span>➖</span>Ayirish</button>
+  </div>
+</div>
+
+<div class='scr' id='brn'>
+  <div class='top'><button class='back' onclick="go('home')">←</button><b>Aqlni charxla</b></div>
+  <div class='grid'>
+    <button class='menu' style='background:var(--c5)' onclick='memStart()'><span>🃏</span>Juftini top</button>
+    <button class='menu' style='background:var(--c4)' onclick="quiz('odd')"><span>🔍</span>Ortiqchasi</button>
+  </div>
+</div>
+
+<div class='scr' id='qz'>
+  <div class='top'><button class='back' onclick='qBack()'>←</button><b id='qt'></b><b id='st' style='margin-left:auto'></b></div>
+  <div class='qq' id='qq'></div>
+  <div class='qv' id='qv'></div>
+  <div class='qf' id='qf'></div>
+  <div class='ans' id='qa'></div>
+</div>
+
+<div class='scr' id='mem'>
+  <div class='top'><button class='back' onclick="go('brn')">←</button><b>Juftini top</b></div>
+  <div class='mg' id='mg'></div>
+  <div class='qf' id='mf'></div>
+  <div class='bar'><button class='tl' onclick='memStart()'>🔄 Qayta</button></div>
+</div>
+
+<div class="scr" id="lst">
+  <div class="top"><button class="back" onclick="go('home')">←</button><b id="lt"></b></div>
+  <div class="tabs" id="ltabs"></div>
+  <div class="letters" id="llist" style="display:flex;flex-direction:column"></div>
+</div>
+
+<div class="scr" id="rd">
+  <div class="top"><button class="back" onclick="go('lst')">←</button><b id="rt"></b></div>
+  <div class="rbox"><div class="re" id="re"></div><div id="rx"></div></div>
+  <div class="bar"><button class="tl" onclick="readAloud()">🔊 Oʻqib ber</button><button class="tl" onclick="stopRead()">⏹ Toʻxta</button></div>
+</div>
+
+<div class="pop" id="pop" onclick="this.classList.remove('on')">
+  <div class="pc"><div class="e" id="pe"></div><div class="t" id="pt"></div><div class="w" id="pw"></div><div id="dg" style="font-size:.8rem;opacity:.6"></div><button>🔊 Yana</button></div>
+</div>
+
+<script>
+const D={
+uz:{n:"Oʻzbekcha",l:"uz-UZ",d:"A|Archa|🎄,B|Baliq|🐟,D|Daraxt|🌳,E|Echki|🐐,F|Fil|🐘,G|Gul|🌸,H|Hoʻkiz|🐷,I|Ilon|🐍,J|Jirafa|🦒,K|Kitob|📖,L|Lola|🌷,M|Mushuk|🐱,N|Non|🍞,O|Olma|🍎,P|Pomidor|🍅,Q|Qalam|✏️,R|Rasm|🖼️,S|Sher|🦁,T|Tarvuz|🍉,U|Uzum|🍇,V|Velosiped|🚲,X|Xoʻroz|🐓,Y|Yulduz|⭐,Z|Zebra|🦓,Oʻ|Oʻrdak|🦆,Gʻ|Gʻalaba|🏆,Sh|Shar|🎈,Ch|Chumoli|🐜"},
+en:{n:"English",l:"en-US",d:"A|Apple|🍎,B|Ball|⚽,C|Cat|🐱,D|Dog|🐶,E|Elephant|🐘,F|Fish|🐟,G|Grapes|🍇,H|House|🏠,I|Ice cream|🍦,J|Juice|🧃,K|Kite|🪁,L|Lion|🦁,M|Moon|🌙,N|Nose|👃,O|Orange|🍊,P|Pizza|🍕,Q|Queen|👑,R|Rabbit|🐰,S|Sun|☀️,T|Tree|🌳,U|Umbrella|☂️,V|Violin|🎻,W|Watermelon|🍉,X|Xylophone|🎹,Y|Yacht|⛵,Z|Zebra|🦓"},
+ru:{n:"Русский",l:"ru-RU",d:"А|Арбуз|🍉,Б|Бабочка|🦋,В|Волк|🐺,Г|Гриб|🍄,Д|Дом|🏠,Е|Ель|🎄,Ё|Ёжик|🦔,Ж|Жираф|🦒,З|Заяц|🐰,И|Индюк|🦃,Й|Йогурт|🥛,К|Кот|🐱,Л|Лиса|🦊,М|Мяч|⚽,Н|Нос|👃,О|Облако|☁️,П|Пингвин|🐧,Р|Рыба|🐟,С|Солнце|☀️,Т|Тигр|🐯,У|Утка|🦆,Ф|Фонарь|🔦,Х|Хлеб|🍞,Ц|Цветок|🌸,Ч|Часы|⏰,Ш|Шар|🎈,Щ|Щётка|🪥,Э|Эскимо|🍦,Ю|Юла|🪀,Я|Яблоко|🍎"}
+};
+const COL=["#ff6b6b","#2f80ed","#27ae60","#f2994a","#9b51e0","#eb5757","#00a8a8"];
+let lang="uz",cur=null;
+const $=id=>document.getElementById(id);
+
+function go(id){
+  document.querySelectorAll(".scr").forEach(s=>s.classList.toggle("on",s.id===id));
+  try{speechSynthesis.cancel()}catch(e){}
+  if(id==="draw")setTimeout(fit,30);
+}
+function speak(t,l){
+  try{if(speechSynthesis.speaking||speechSynthesis.pending){speechSynthesis.cancel();setTimeout(()=>utter(t,l),80)}else utter(t,l)}catch(e){}
+}
+
+/* Ovoz */
+let VO=[],AC=null;
+function loadV(){try{VO=speechSynthesis.getVoices()||[]}catch(e){}}
+loadV();try{speechSynthesis.onvoiceschanged=loadV}catch(e){}
+function voiceFor(l){
+  const p=l.slice(0,2);
+  let v=VO.find(x=>x.lang.replace('_','-').toLowerCase().startsWith(p));
+  if(!v&&p==='uz')v=VO.find(x=>/^(tr|ru|kk)/i.test(x.lang));
+  return v||null;
+}
+function utter(t,l,n){
+  const u=new SpeechSynthesisUtterance(t),v=voiceFor(l);
+  if(v){u.voice=v;u.lang=v.lang}else u.lang=(l.slice(0,2)==='uz'?'tr-TR':l);
+  u.rate=.8;
+  u.onerror=ev=>{
+    if(ev&&(ev.error==='interrupted'||ev.error==='canceled'))return;
+    if(!n){speechSynthesis.cancel();utter(t,'en-US',1)}
+    else{const w=$('pw');if(w&&w.textContent.indexOf('🔇')<0)w.textContent+=' 🔇'}
+  };
+  speechSynthesis.speak(u);
+}
+function beep(f,d,ty){
+  try{
+    AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+    if(AC.state==='suspended')AC.resume();
+    const o=AC.createOscillator(),g=AC.createGain();
+    o.type=ty||'sine';o.frequency.value=f;g.gain.value=.15;
+    o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+d);
+  }catch(e){}
+}
+function ok(){beep(660,.12);setTimeout(()=>beep(880,.2),120)}
+function no(){beep(180,.25,'square')}
+addEventListener('pointerdown',()=>{beep(30,.01);try{speechSynthesis.resume();loadV()}catch(e){}},{once:true});
+
+/* Musiqa */
+const MEL=[261.6,329.6,392,329.6,440,392,329.6,293.7,261.6,329.6,392,523.3,440,392,329.6,293.7];
+let mOn=false,mI=0,mT=null;
+function note(f){
+  try{
+    AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+    if(AC.state==='suspended')AC.resume();
+    const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime;
+    o.type='triangle';o.frequency.value=f;
+    g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.06,t+.03);g.gain.exponentialRampToValueAtTime(.0001,t+.5);
+    o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+.55);
+  }catch(e){}
+}
+function music(){
+  mOn=!mOn;$('mb').textContent=mOn?'🎵':'🔇';
+  if(mOn){note(MEL[mI++%MEL.length]);mT=setInterval(()=>note(MEL[mI++%MEL.length]),450)}else clearInterval(mT);
+}
+
+/* Alifbo */
+function tabs(){
+  $("tabs").innerHTML="";
+  for(const k in D){
+    const b=document.createElement("button");
+    b.className="tab"+(k===lang?" on":"");b.textContent=D[k].n;
+    b.onclick=()=>{lang=k;tabs();letters()};
+    $("tabs").appendChild(b);
+  }
+}
+function letters(){
+  const box=$("letters");box.innerHTML="";
+  D[lang].d.split(",").forEach((x,i)=>{
+    const [a,w,e]=x.split("|");
+    const b=document.createElement("button");
+    b.className="l";b.style.background=COL[i%COL.length];b.textContent=a;
+    b.onclick=()=>{beep(700,.08);cur={a,w,e};$("pe").textContent=e;$("pt").textContent=a;$("pw").textContent=w;$("pop").classList.add("on");say()};
+    box.appendChild(b);
+  });
+}
+function say(){
+  $('dg').textContent=('speechSynthesis' in window)?('Ovozlar soni: '+VO.length):'Bu brauzerda ovoz yoʻq';
+  if(cur)speak(cur.a+'. '+cur.w,D[lang].l);
+}
+$("pop").querySelector("button").onclick=ev=>{ev.stopPropagation();say()};
+tabs();letters();
+
+/* Sheʼr va hikoyalar */
+const L={
+uz:{p:[
+["Mushukcha","🐱","Mushukcha, mushukcha,\nOppoq paypoq kiygan,\nSutni ichib toʻyibdi,\nGilam ustida yotgan."],
+["Quyosh","☀️","Quyosh chiqdi osmonga,\nNur sochdi hamma yonga.\nUygʻon, uygʻon, bolajon,\nBugun yangi kun, mehribon."],
+["Sanaymiz","🔢","Bir — burunim bitta,\nIkki — qoʻlim ikkita,\nUch — gul oldim uchta,\nToʻrt — qoʻzichoq toʻrtta,\nBesh — barmogʻim beshta."],
+["Onajonim","❤️","Onajonim, mehribon,\nQuchogʻingiz issiq jon.\nSizni yaxshi koʻraman,\nDoim yoningizdaman."],
+["Quyoncha","🐰","Oq quyoncha sakraydi,\nBirdan butaga yashirinadi.\nSabzi koʻrsa, quvonadi,\nTez-tez chaynab yeb oladi.\nQulogʻi katta, dumi kichik,\nOʻzi esa juda chaqqon.\nUni sevadi har bola,\nChunki u bir mehribon."],
+["Yomgʻir","🌧️","Yomgʻir yogʻdi tomchilab,\nTomga tushdi shitirlab.\nHovlidagi gullar ham\nIchdi suvni qanchalab.\nSoyabonim ochaman,\nSakrab-sakrab oʻynayman.\nYomgʻir tindi, qarasam,\nOsmonda kamalak chiqdi."],
+["Maktabga","🎒","Ertalab turdim erta,\nYuzimni yuvdim sovuq suvda.\nSumkamda kitob, daftar,\nQalamim ham bor yonimda.\nMaktabga ketdim shoshib,\nOʻqituvchim kutib turibdi.\nBugun koʻp narsa oʻrganaman,\nBilimdon boʻlaman, bilib qoʻying!"],
+["Kamalak","🌈","Osmonda kamalak chiqdi,\nYetti rangda porladi.\nQizil, sariq, yashil, koʻk,\nHammamizni quvontirdi.\nBir uchi togʻda turibdi,\nBir uchi esa dalada.\nRanglarni sanab chiqamiz,\nBirga oʻynab, kulamiz."],
+["Mening oilam","👪","Oilam mening katta, shod,\nDadam, oyim, opam, akam.\nBobom, buvim ertak aytar,\nHammamiz bir dasturxonda.\nBirga ovqat yeymiz doim,\nBirga kulib oʻtiramiz.\nOilam mening eng yaxshi,\nHammasini sevaman men."],
+["Alla","🌙","Oy chiqdi, yulduz yondi,\nKun charchab, tinchib qoldi.\nKoʻzlarim yumilyapti,\nOyim alla aytyapti.\nAlla, alla, bolajon,\nYaxshi tush koʻr, uxla jon.\nErtaga yana quyosh,\nYangi kunni olib keladi."],
+["Qaldirgʻoch","🐦","Qaldirgʻoch keldi uchib,\nBahor keldi quvonib.\nTomda uya qurdi u,\nKun boʻyi tinmay ishladi.\nQanot qoqib uchadi,\nBolalariga don tashiydi.\nOsmonda xursand uchar,\nQoʻshigʻini kuylab oʻtar."],
+["Olma","🍎","Daraxtda qizil olma,\nPishib turibdi bolalar.\nShoxida u chayqalar,\nShamol bilan oʻynar.\nQoʻlim yetmas, baland u,\nDadam olib bersa bu.\nYuvib, tishlab yeyman,\nSogʻ boʻlaman, sevinaman."],
+["Doʻstlik","🤝","Doʻstim bilan oʻynayman,\nOʻyinchogʻimni beraman.\nU yiqilsa, turgʻazaman,\nU kulsa, men kulaman.\nBirga rasm chizamiz,\nBirga qoʻshiq aytamiz.\nYaxshi doʻst bor kimda,\nOʻsha eng boy odam."]],
+s:[
+["Tirishqoq chumoli","🐜","Yozning issiq kuni edi. Chumoli kun boʻyi don tashirdi.\n\nChigirtka esa qoʻshiq aytib oʻynardi. U chumolidan soʻradi: «Nega dam olmaysan?»\n\nChumoli aytdi: «Qish uchun yigʻayapman.»\n\nQish keldi. Qor yogʻdi, chigirtka sovqotib, ochiqib qoldi. Chumoli unga don berdi va dedi: «Kelasi yoz birga ishlaymiz.»\n\nChigirtka rahmat aytdi. Shu kundan boshlab u ham mehnat qilishni oʻrgandi."],
+["Kechikkan quyoncha","🐰","Onasi quyonchaga aytdi: «Qorongʻi tushmasidan uyga qayt.»\n\nQuyoncha oʻynab, vaqtni unutdi. Oʻrmon qorongʻi boʻlib qoldi. U juda qoʻrqdi.\n\nShunda osmonda oy chiqdi va yoʻlni yoritdi. Quyoncha yugurib uyiga yetdi.\n\nOnasi uni mahkam quchdi. Quyoncha endi har kuni vaqtida qaytadi."],
+["Mehribon baliqcha","🐟","Daryoda kichkina baliqcha yashardi. Bir kuni u sayoz joyda qolib ketgan qisqichbaqani koʻrdi.\n\nQisqichbaqa chuqur suvga chiqolmasdi. Baliqcha unga yordam berdi va suvga itarib yubordi.\n\nQisqichbaqa xursand boʻldi: «Rahmat, doʻstim!»\n\nShu kundan ular eng yaqin doʻst boʻlishdi."],
+["Sher va sichqoncha","🦁","Katta oʻrmonda sher uxlab yotardi. Kichkina sichqoncha uning ustidan yugurib oʻtdi va sherni uygʻotib yubordi. Sher gʻazablanib, sichqonchani panjasi bilan ushlab oldi.\n\n«Meni qoʻyib yuboring, shoh janoblari», deb yolvordi sichqoncha. «Bir kun men ham sizga yordam beraman».\n\nSher qah-qah otib kuldi: «Sen-a? Menga yordam berasanmi?» Ammo uni qoʻyib yubordi.\n\nBir necha kundan keyin sher ovchilarning toʻriga tushib qoldi. U qanchalik tortmasin, chiqolmadi va bor kuchi bilan oʻkirdi.\n\nSichqoncha ovozni eshitib, yugurib keldi. U toʻrning ipini tishlab-tishlab qirqdi va sher ozod boʻldi.\n\n«Rahmat, kichkina doʻstim», dedi sher. «Endi bilaman: kichik ekan deb hech kimni kamsitmaslik kerak»."],
+["Toshbaqa va quyon","🐢","Quyon har kuni toshbaqani masxara qilardi: «Sen juda sekinsan, hech qayerga yetib bormaysan!»\n\nToshbaqa jahli chiqmay aytdi: «Keling, poygalashamiz».\n\nQuyon kulib yubordi, lekin rozi boʻldi. Hayvonlar yigʻilishdi va poyga boshlandi. Quyon shamolday uchib ketdi. Toshbaqa esa oldinga qadam-baqadam yurdi.\n\nQuyon ancha oldinga oʻtib ketgach, oʻziga oʻzi dedi: «Hali vaqt bor, bir oz dam olaman». U daraxt tagiga yotib, uxlab qoldi.\n\nToshbaqa toʻxtamadi. U sekin, lekin toʻxtovsiz yurdi. Quyon uygʻonib qarasa, toshbaqa marraga yaqinlashib qolgan edi!\n\nQuyon yugurdi, ammo kech qoldi. Toshbaqa birinchi boʻlib marraga yetdi.\n\nQuyon uyalib, toshbaqadan uzr soʻradi. Toshbaqa kulimsirab dedi: «Sabr va mehnat har doim gʻalaba qozonadi»."],
+["Afandi va qozon","🍲","Nasriddin Afandi bir kuni qoʻshnisidan katta qozon qarzga oldi. Bir hafta oʻtgach, qozonni qaytarayotib, ichiga kichkina bir qozoncha ham soldi.\n\n«Bu nima?» deb soʻradi qoʻshni hayron boʻlib.\n\n«Sizning qozoningiz bola tugʻdi», dedi Afandi jiddiy qiyofada. «Bola ham sizniki».\n\nQoʻshni xursand boʻldi va ikkala qozonni oldi.\n\nKeyingi oy Afandi yana qozon soʻrab keldi. Qoʻshni mamnuniyat bilan berdi. Ammo bu safar Afandi qozonni uzoq vaqt qaytarmadi.\n\nQoʻshni kelib soʻradi: «Qozonim qani?»\n\nAfandi xafa boʻlib dedi: «Afsus, sizning qozoningiz vafot etdi».\n\n«Qozon ham oʻladimi?» deb jahli chiqdi qoʻshni.\n\n«Tugʻadigan boʻlsa, oʻlishi ham mumkin-ku», dedi Afandi jilmayib.\n\nQoʻshni uyalib, jim qoldi."],
+["Qor odam","⛄","Qishning birinchi qori yogʻdi. Sardor ertalab turib, derazadan qaradi: butun hovli oppoq edi!\n\nU issiq kiyinib, hovliga chiqdi. Katta qor yumaloq yasadi, ustiga oʻrtacha, uning ustiga esa kichkina yumaloq qoʻydi. Burni uchun sabzi, koʻzlari uchun koʻmir topdi.\n\nSardor qor odamga oʻz sharfini oʻrab qoʻydi: «Sovuq qotib qolmasin».\n\nKunlar oʻtdi. Bahor yaqinlashdi, quyosh isiy boshladi. Qor odam asta-sekin erib bordi.\n\nSardor xafa boʻldi. Buvisi uni quchoqlab aytdi: «Qor odam suvga aylanib, daraxtlarga kuch beradi. Kelasi qishda yana qor yogʻadi».\n\nSardor jilmaydi. U kelasi qishni intizor kutadigan boʻldi."],
+["Kichkina urugʻ","🌱","Zafar bobosidan bitta kichkina urugʻ oldi. «Buni yerga eksang, daraxt boʻladi», dedi bobosi.\n\nZafar urugʻni tuproqqa ekdi va har kuni suv quydi. Birinchi kuni hech narsa chiqmadi. Ikkinchi kuni ham.\n\nZafar sabrsizlanib dedi: «Bobo, urugʻning oʻsishi uchun qancha kutish kerak?»\n\n«Sabr qil, bolam», dedi bobosi. «Eng chiroyli narsalar sekin oʻsadi».\n\nBir hafta oʻtgach, tuproqdan mayda yashil novda chiqdi. Zafar xursandligidan baqirib yubordi.\n\nYillar oʻtdi. Novda baland olma daraxtiga aylandi. Zafar bobosi bilan uning soyasida oʻtirib, shirin olmalar yedi."],
+["Adashgan kuchukcha","🐶","Kichkina kuchukcha bir kuni uyidan chiqib, oʻynab ketdi. U kapalakni quvdi, gullarni hidladi, ariqdan sakradi. Keyin qarasa, qayerda ekanini bilmay qolibdi.\n\nKuchukcha qoʻrqib, ingillay boshladi. Shu payt yoʻldan oʻtayotgan Madina uni koʻrib qoldi.\n\n«Voy, jonivor, adashibsan-da?» dedi Madina va uni quchogʻiga oldi.\n\nU kuchukchani koʻchama-koʻcha olib yurdi va hammadan soʻradi: «Bu kuchukcha kimniki?»\n\nOxiri bir bola yugurib keldi: «Bu mening Oqboshim! Uni butun kun qidirdim!»\n\nKuchukcha dumini likillatib, egasining bagʻriga otildi. Madina xursand boʻlib uyiga qaytdi: yaxshilik qilish juda yoqimli ekan."],
+["Ayyor tulki va qargʻa","🦊","Qargʻa bir boʻlak pishloqni topib, daraxt shoxiga qoʻndi. Pishloq hidini sezgan tulki daraxt tagiga yugurib keldi.\n\n«Qargʻa opa, siz naqadar goʻzalsiz! Tuklaringiz yaltirab turibdi. Ovozingiz ham chiroyli boʻlsa kerak-a?» dedi tulki shirin tilda.\n\nQargʻa maqtovdan quvonib ketdi. U oʻz ovozini koʻrsatmoqchi boʻldi va ogʻzini katta ochdi. Shu zahoti pishloq pastga tushib ketdi.\n\nTulki pishloqni ilib oldi va kulib ketdi.\n\nQargʻa afsuslanib oʻyladi: «Maqtovga darrov ishonib ketmaslik kerak ekan»."],
+["Bobo va uch oʻgʻil","👴","Bir bobo uch oʻgʻli bilan yashardi. Oʻgʻillari doim janjallashardi. Bobo ularni tinchitolmay, xafa edi.\n\nBir kuni bobo uchala oʻgʻlini chaqirib, bir bogʻ choʻp berdi: «Mana buni sindiringlar».\n\nBirinchi oʻgʻil bor kuchi bilan urindi, lekin sindira olmadi. Ikkinchisi ham, uchinchisi ham.\n\nKeyin bobo bogʻni yechdi va choʻplarni bittadan berdi. Endi har biri choʻpni osongina sindirdi.\n\n«Yakka choʻp oson sinadi, birga boʻlsa esa mustahkam boʻladi», dedi bobo. «Siz ham ahil boʻlsangiz, hech kim sizni yengolmaydi».\n\nOʻgʻillar uyalib, bir-biridan uzr soʻradi va shu kundan ahil yashadi."],
+["Yolgʻiz yulduzcha","⭐","Osmonda juda kichkina yulduzcha yashardi. U har kecha boshqa yulduzlarga qarab oʻylardi: «Men juda kichikman, meni hech kim payqamaydi».\n\nBir kuni u oyga dedi: «Kashki, men quyoshdek katta boʻlsam!»\n\nOy kulimsirab javob berdi: «Quyosh kunduzi porlaydi, sen esa kechasi porlaysan. Har kimning oʻz vazifasi bor».\n\nShu kecha dengizda bir kema adashib qoldi. Kapitan osmonga qarab, kichkina yulduzchani koʻrdi va uning yorugʻligʻiga qarab yoʻl topdi.\n\nKema qirgʻoqqa omon yetib keldi.\n\nYulduzcha oʻsha kuni tushundi: kichik boʻlsa ham, u kimgadir kerak ekan. U ertasi kechadan boshlab yanada yorqinroq porladi."],
+["Sehrli qalam","🖍️","Ali bir kuni yoʻlda oddiy qalam topib oldi. Uni uyiga olib kelib, daftarga olma chizdi. Qarasa, olma daftardan chiqib, haqiqiy boʻlib qoldi!\n\nAli hayratdan qotib qoldi: «Bu sehrli qalam-ku!»\n\nU avval oʻziga koʻp shirinlik chizmoqchi boʻldi. Ammo derazadan qarasa, ochiqib qolgan qush shoxda sovqotib oʻtirardi.\n\nAli qush uchun don chizdi. Qush don yeb, xursand boʻlib sayradi.\n\nKeyin Ali qoʻshnining kasal kampiriga issiq shoʻrva chizib berdi. Kampir duo qildi.\n\nAli shunda anglab yetdi: sehrli qalamning eng katta sehri — boshqalarga yordam berishda ekan."]]},
+en:{p:[
+["My Cat","🐱","My cat is soft, my cat is small,\nShe likes to play with a bouncy ball.\nShe purrs and purrs when I say hello,\nAnd naps by the fire when cold winds blow."],
+["Sunny Day","☀️","The sun comes up, the birds all sing,\nWake up, wake up, it’s a brand new day.\nLet’s run and jump and laugh and play,\nAnd smile at everything."],
+["The Moon","🌙","The moon is round, the moon is bright,\nShe watches over us at night.\nThe stars all twinkle, one by one,\nUntil the morning brings the sun."]],
+s:[
+["The Brave Little Mouse","🐭","A little mouse lived in a big green field. One day she saw a tiny bird stuck in the tall grass.\n\nThe mouse was scared, but she did not run away. She pulled and pulled the grass until the bird was free.\n\n“Thank you!” sang the bird. “You are brave and kind.”\n\nThe mouse smiled. Being kind is the bravest thing of all."],
+["The Sharing Apple","🍎","Tom found a big red apple under a tree. He was very hungry.\n\nThen he saw his friend Mia. She had nothing to eat.\n\nTom cut the apple into two pieces and gave one to Mia.\n\nThe apple tasted sweeter because they shared it."],
+["The Little Star","⭐","There was once a tiny star who felt very small. Every night she looked at the big, bright moon and sighed.\n\n“I wish I could shine like you,” she said.\n\nThe moon smiled. “You are special too. Look down at the sea.”\n\nThe little star saw a boat lost in the dark. The sailors could not find their way home.\n\nThe star shone as brightly as she could. The sailors saw her light and followed it to the shore.\n\nFrom that night on, the little star was never sad again. She knew that everyone is important, even the smallest one."],
+["The Kind Elephant","🐘","Ella the elephant lived near a quiet river. Every morning she walked to the water to drink.\n\nOne day she heard a small voice. A baby bird had fallen from its nest and could not fly.\n\n“Don’t worry,” said Ella. She lifted the bird gently with her long trunk and put it back in the nest.\n\nThe mother bird sang with joy. “Thank you, Ella! How can we help you?”\n\nElla laughed. “I do not need anything. Helping you made me happy.”\n\nFrom then on, the birds sang to Ella every morning. It was the sweetest song in the whole forest."]]},
+ru:{p:[
+["Котёнок","🐱","Маленький котёнок\nЛюбит молоко,\nБегает по дому\nБыстро и легко."],
+["Солнышко","☀️","Солнышко проснулось,\nЛучиком коснулось,\nСкажем всем: «Привет!»\nЗдравствуй, белый свет!"],
+["Дождик","🌧️","Кап-кап-кап — идёт дождик,\nБарабанит по крыше.\nЯ открою зонтик,\nПусть дождик поёт потише."]],
+s:[
+["Храбрая мышка","🐭","Жила-была маленькая мышка. Однажды она увидела птенца, который запутался в траве.\n\nМышке было страшно, но она не убежала. Она тянула траву, пока птенец не освободился.\n\n«Спасибо!» — запел птенец. «Ты храбрая и добрая.»\n\nДобрые дела — самые смелые."],
+["Яблоко на двоих","🍎","Миша нашёл под деревом большое красное яблоко. Он очень хотел есть.\n\nТут он увидел подружку Машу. У неё ничего не было.\n\nМиша разрезал яблоко пополам и отдал половинку Маше.\n\nЯблоко показалось вкуснее, потому что они поделились."],
+["Маленький ёжик","🦔","Жил в лесу маленький ёжик. Все боялись его иголок и не хотели с ним играть.\n\nЁжик грустил и думал: «Почему у меня нет друзей?»\n\nОднажды зайчонок упал в яму и не мог выбраться. Ёжик проходил мимо и сразу поспешил на помощь. Он протянул зайчонку лапку, и тот вылез.\n\n«Спасибо! Ты настоящий друг», — сказал зайчонок.\n\nС тех пор все звери поняли: у ёжика колючие иголки, но доброе сердце. И у него появилось много друзей."],
+["Волшебный карандаш","✏️","Ваня нашёл на дороге карандаш. Он нарисовал в тетради яблоко, и яблоко стало настоящим!\n\n«Карандаш волшебный!» — воскликнул Ваня.\n\nСначала он хотел нарисовать себе много конфет. Но в окно он увидел прозябшую птичку.\n\nВаня нарисовал для птички зёрнышки. Птичка наелась и весёло запела.\n\nТогда Ваня понял: главное волшебство карандаша — помогать другим."]]}
+};
+let mode="p",ll="uz",rdCur=null;
+function openLib(m){mode=m;$("lt").textContent=m==="p"?"Sheʼrlar":"Hikoyalar";libTabs();libList();go("lst")}
+function libTabs(){
+  const t=$("ltabs");t.innerHTML="";
+  for(const k in D){
+    const b=document.createElement("button");b.className="tab"+(k===ll?" on":"");b.textContent=D[k].n;
+    b.onclick=()=>{ll=k;libTabs();libList()};t.appendChild(b);
+  }
+}
+function libList(){
+  const box=$("llist");box.innerHTML="";
+  L[ll][mode].forEach(x=>{
+    const b=document.createElement("button");b.className="item";b.innerHTML="<span>"+x[1]+"</span>"+x[0];
+    b.onclick=()=>{rdCur=x;$("rt").textContent=x[0];$("re").textContent=x[1];$("rx").textContent=x[2];go("rd");readAloud()};
+    box.appendChild(b);
+  });
+}
+function readAloud(){
+  try{
+    speechSynthesis.cancel();
+    (rdCur[2].match(/[^.!?\n]+[.!?]*/g)||[]).forEach(s=>{
+      if(s.trim())setTimeout(()=>utter(s,D[ll].l),80);
+    });
+  }catch(e){}
+}
+function stopRead(){try{speechSynthesis.cancel()}catch(e){}}
+
+/* Raqamlar va aql */
+let lvl=1,stars=0,qm='cnt',ans=null,busy=false;
+function setLvl(n){lvl=n;document.querySelectorAll('.lv').forEach(b=>b.classList.toggle('on',+b.dataset.l===n))}
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const sh=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(p=>p[1]);
+const EM=['🍎','⭐','🐟','🎈','🐥','🍓','🚗','🌸'];
+const CAT=[['🐶','🐱','🐰','🐯','🐘'],['🍎','🍌','🍇','🍓','🍊'],['🚗','🚌','🚲','✈️','🚂'],['🌸','🌳','🌻','🌷','🍀'],['⚽','🏀','🎾','🎲','🧸']];
+function nums(n){const s=new Set([n]);while(s.size<4){const x=n+R(-3,3);if(x>=0)s.add(x)}return sh([...s].map(String))}
+function rows(e,n){let s='';for(let i=1;i<=n;i++)s+=e+(i%5===0?'\n':' ');return s}
+function qBack(){go(qm==='odd'?'brn':'num')}
+function quiz(m){qm=m;$('qt').textContent={cnt:'Sanash',add:'Qoʻshish',sub:'Ayirish',odd:'Ortiqchasi'}[m];go('qz');nextQ()}
+function nextQ(){
+  busy=false;$('qf').textContent='';$('st').textContent='⭐ '+stars;
+  const mx=lvl===1?10:30,e=EM[R(0,7)];let q,v='',o;
+  if(qm==='cnt'){const n=R(1,lvl===1?5:10);ans=String(n);q='Nechta?';v=rows(e,n);o=nums(n)}
+  else if(qm==='add'){const a=R(1,mx-1),b=R(1,mx-a);ans=String(a+b);q=a+' + '+b+' = ?';if(lvl===1)v=(e+' ').repeat(a)+'➕ '+(e+' ').repeat(b);o=nums(a+b)}
+  else if(qm==='sub'){const a=R(2,mx),b=R(1,a-1);ans=String(a-b);q=a+' − '+b+' = ?';if(lvl===1)v=(e+' ').repeat(a);o=nums(a-b)}
+  else{const c=sh(CAT),g=sh(c[0]).slice(0,lvl===1?3:4);ans=c[1][R(0,4)];q='Ortiqchasini top!';o=sh([...g,ans])}
+  $('qq').textContent=q;$('qv').textContent=v;$('qv').style.fontSize=qm==='cnt'?'3.4rem':'2.2rem';const A=$('qa');A.innerHTML='';
+  o.forEach((x,i)=>{const b=document.createElement('button');b.textContent=x;b.style.background=COL[i%COL.length];b.onclick=()=>pick(b,x);A.appendChild(b)});
+}
+function pick(b,x){
+  if(busy)return;
+  if(x===ans){busy=true;stars++;$('st').textContent='⭐ '+stars;$('qf').textContent='🎉 Barakalla!';ok();speak('Barakalla!',D.uz.l);setTimeout(nextQ,1100)}
+  else{no();b.classList.add('x');b.disabled=true;$('qf').textContent='Yana urinib koʻr 💪'}
+}
+let mc=[],mo=[],mm=0,mv=0;
+const MP=['🐶','🐱','🐰','🦁','🐘','🐟','🍎','🍌','🍇','🚗','⭐','🌸'];
+function memStart(){
+  const p=sh(MP).slice(0,lvl===1?4:8);mc=sh([...p,...p]);mo=[];mm=0;mv=0;$('mf').textContent='';
+  const g=$('mg');g.innerHTML='';
+  mc.forEach((e,i)=>{const b=document.createElement('button');b.className='mc';b.textContent='❓';b.onclick=()=>flip(i,b);g.appendChild(b)});
+  go('mem');
+}
+function flip(i,b){
+  if(b.dataset.d||mo.length>=2||mo.some(z=>z.i===i))return;
+  beep(500,.08);b.textContent=mc[i];b.classList.add('o');mo.push({i,b});
+  if(mo.length===2){
+    mv++;const [x,y]=mo;
+    if(mc[x.i]===mc[y.i]){
+      x.b.dataset.d=1;y.b.dataset.d=1;x.b.classList.add('m');y.b.classList.add('m');mo=[];mm++;
+      if(mm===mc.length/2){stars+=3;$('mf').textContent='🎉 Barakalla! '+mv+' urinishda topding. +3 ⭐';speak('Barakalla!',D.uz.l)}
+    }else setTimeout(()=>{[x,y].forEach(z=>{z.b.textContent='❓';z.b.classList.remove('o')});mo=[]},800);
+  }
+}
+
+/* Chizish */
+const cv=$("cv"),ctx=cv.getContext("2d");
+let color="#e63946",size=8,erase=false,drawing=false,last=null;
+function fit(){
+  const r=$("cw").getBoundingClientRect();if(!r.width)return;
+  const d=window.devicePixelRatio||1;let snap=null;
+  if(cv.width){snap=document.createElement("canvas");snap.width=cv.width;snap.height=cv.height;snap.getContext("2d").drawImage(cv,0,0)}
+  cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);
+  ctx.fillStyle="#fff";ctx.fillRect(0,0,cv.width,cv.height);
+  if(snap)ctx.drawImage(snap,0,0);
+  ctx.lineCap=ctx.lineJoin="round";
+}
+addEventListener("resize",()=>{if($("draw").classList.contains("on"))fit()});
+function pos(e){const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)*cv.width/r.width,y:(e.clientY-r.top)*cv.height/r.height}}
+function seg(a,b){
+  const d=window.devicePixelRatio||1;
+  ctx.strokeStyle=erase?"#fff":color;ctx.lineWidth=(erase?size*2.5:size)*d;
+  ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x+.01,b.y);ctx.stroke();
+}
+cv.addEventListener("pointerdown",e=>{drawing=true;cv.setPointerCapture(e.pointerId);last=pos(e);seg(last,last)});
+cv.addEventListener("pointermove",e=>{if(!drawing)return;const p=pos(e);seg(last,p);last=p});
+["pointerup","pointercancel"].forEach(t=>cv.addEventListener(t,()=>drawing=false));
+
+function bar(){
+  const b=$("bar");b.innerHTML="";
+  ["#e63946","#f2994a","#f2c94c","#27ae60","#2f80ed","#9b51e0","#8d5524","#111111"].forEach(c=>{
+    const s=document.createElement("button");
+    s.className="sw"+(!erase&&color===c?" on":"");s.style.background=c;
+    s.onclick=()=>{color=c;erase=false;bar()};b.appendChild(s);
+  });
+  [4,8,16].forEach(n=>{
+    const s=document.createElement("button");
+    s.className="sz"+(size===n?" on":"");s.innerHTML='<i style="width:'+(n+4)+'px;height:'+(n+4)+'px"></i>';
+    s.onclick=()=>{size=n;bar()};b.appendChild(s);
+  });
+  const e=document.createElement("button");e.className="tl"+(erase?" on":"");e.textContent="🧽 Oʻchirgich";
+  e.onclick=()=>{erase=true;bar()};b.appendChild(e);
+  const c=document.createElement("button");c.className="tl";c.textContent="🗑️ Tozalash";
+  c.onclick=()=>{ctx.fillStyle="#fff";ctx.fillRect(0,0,cv.width,cv.height)};b.appendChild(c);
+}
+bar();
+if("serviceWorker" in navigator){addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
+</script>
+</body>
+</html>

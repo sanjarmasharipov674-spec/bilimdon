@@ -1,0 +1,17 @@
+{
+  "name": "Bilimdon",
+  "short_name": "Bilimdon",
+  "description": "Bolalar uchun taʼlimiy ilova: alifbo, raqamlar, sheʼr va hikoyalar, chizish",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fff4d6",
+  "theme_color": "#ff7a59",
+  "lang": "uz",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
